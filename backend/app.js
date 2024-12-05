@@ -6,6 +6,7 @@ import connectDB from "./database/connection.js"
 import userRouter from "./routes/userRoutes.js"
 import blogRouter from "./routes/blogRoutes.js"
 import otpRouter from "./routes/otpRoutes.js"
+import commentRouter from "./routes/commentRoutes.js"
 
 dotenv.config()
 
@@ -24,6 +25,7 @@ app.use(cors({
 app.use('/', userRouter)
 app.use('/',blogRouter)
 app.use('/',otpRouter)
+app.use('/',commentRouter)
 
 
 app.listen(PORT,()=>{
