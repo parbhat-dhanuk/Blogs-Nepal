@@ -1,6 +1,6 @@
 import axios from "axios"
 
 const API = axios.create({
-    baseURL:"https://react30.onrender.com/api/user"
+    baseURL:"http://localhost:3000"
 })
 export default API
