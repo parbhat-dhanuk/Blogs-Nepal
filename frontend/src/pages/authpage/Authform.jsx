@@ -197,7 +197,7 @@ const handleSubmit = (e)=>{
               <div className="flex items-center">
               
               <label htmlFor="remember-me" className="ml-3 block text-sm text-gray-800">
-                <Link to="" className="text-blue-600 font-semibold hover:underline ml-1">Forget Password ?</Link>
+                <Link to="/forgetpassword" className="text-blue-600 font-semibold hover:underline ml-1">Forget Password ?</Link>
               </label>
             </div>
             )}
