@@ -18,7 +18,7 @@ app.use(express.json())  // to parse the json file
 app.use(cookieParser())  // to verify the token from cookie
 
 app.use(cors({
-  origin: '*',
+  origin: 'http://localhost:5173',
   credentials: true                         
 }));
 

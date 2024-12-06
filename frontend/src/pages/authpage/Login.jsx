@@ -1,12 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Authform from './Authform'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { login, setStatus } from '../../redux/authSlice'
+import STATUS from '../../status/status'
 
 const Login = () => {
 
-    const handleLogin=async(data)=>{
-   console.log(data)
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
+  const {status}=useSelector((state)=>state.auth)
+
+    const handleLogin=(data)=>{
+      dispatch(login(data))
     }
 
+
+    useEffect(()=>{
+      if(status===STATUS.SUCCESS){
+        navigate("/")
+        dispatch(setStatus(null))
+      }
+    },[status])
 
   return (
     <Authform type="Login" submit={handleLogin} />
