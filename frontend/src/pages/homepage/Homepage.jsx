@@ -1,5 +1,9 @@
-import  { useState } from 'react'
-import { Link } from 'react-router-dom';
+import  { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import API from '../../http';
+import { setStatus } from '../../redux/otpSlice';
+
 
 const Homepage = () => {
     const [menu , setMenu]=useState();
@@ -8,6 +12,34 @@ const Homepage = () => {
       setMenu (!menu)
     }
 
+      
+    // logout
+    const [isLoggedIn,setIsLoggedIn] = useState(false)
+    const navigate= useNavigate()
+    const dispatch=useDispatch()
+    
+    const {token} = useSelector((state) => state.auth)
+    
+    useEffect(()=>{
+        const lToken=localStorage.getItem("access-token")
+         setIsLoggedIn(!!token||lToken)
+    },[token])
+
+
+   const handleLogout=async()=>{
+    try {
+        localStorage.removeItem("access-token")
+        await API.post('/logout', {}, { withCredentials: true })
+        setIsLoggedIn(false)
+        navigate('/login')
+        dispatch(setStatus(null))
+        
+      } catch (error) {
+        console.error('Error logging out:', error);
+      }
+    
+   }
+     
 
   return (
 
@@ -22,9 +54,19 @@ const Homepage = () => {
                     <span className="self-center text-2xl font-bold whitespace-nowrap dark:text-white">Coding Nepal</span>
                 </Link>
                 <div className="flex items-center lg:order-2">
-                    <Link to="/login" className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</Link>
+                    {
+                        isLoggedIn?(
+                            <>
+                           
+                    <button onClick={handleLogout} className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Logout</button>
+                    
+                            </>
+                        ):(<>
+                            <Link to="/login" className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</Link>
                     <Link to="/register" className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Sign up</Link>
                     
+                            </>)
+                    }
                     {/* toggle menu */}
                     <button onClick={toggleMenu} data-collapse-toggle="mobile-menu-2" type="button" className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
                         <span className="sr-only">Open main menu</span>
@@ -34,12 +76,26 @@ const Homepage = () => {
                 </div>
                 <div className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
                     <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-                        <li>
-                            <a href="#" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
+                     {
+                        isLoggedIn?(
+                           <>
+                            <li>
+                            <Link to="/" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Home</Link>
                         </li>
+
                         <li>
-                            <a href="#" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Company</a>
+                            <Link to="/" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Create</Link>
                         </li>
+                           </>
+                        ):(
+                            <>
+                             <li>
+                            <Link to="/" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Home</Link>
+                        </li>
+                            </>
+                        )
+                     }
+                        
                        
                     </ul>
                 </div>
@@ -50,12 +106,24 @@ const Homepage = () => {
            {menu?(
              <ul className='flex-col '>
                
-                         <li>
-                             <a href="#" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Home</a>
-                         </li>
-                         <li>
-                             <a href="#" className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-blue-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Company</a>
-                         </li>
+                        {
+                            isLoggedIn?(
+                                <>
+                                 <li>
+                             <Link to="/" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Home</Link>
+                              </li>
+
+                              <li>
+                             <Link to="/" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Create</Link>
+                              </li>
+                                </>
+                            ):(
+                                <li>
+                                <Link to="/" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Home</Link>
+                                 </li>
+                            )
+                        }
+                         
                        
  
              </ul>

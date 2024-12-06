@@ -10,7 +10,7 @@ const authSlice = createSlice({
 
         user:"",
         token:null,
-        status:null,
+        status:null
         
     },
 
@@ -30,7 +30,7 @@ const authSlice = createSlice({
     }
 })
 
-export const {setUser,setToken,setStatus} = authSlice.actions
+export const {setUser,setToken,setStatus,setloggedIn} = authSlice.actions
 
 export default authSlice.reducer
 
@@ -62,8 +62,9 @@ export function login(data){
         dispatch(setStatus(STATUS.LOADING))
         const response = await API.post("/login",data,{ withCredentials: true })
        if(response.status===200){
-        dispatch(setToken(response.data.token))
         dispatch(setStatus(STATUS.SUCCESS))
+        dispatch(setToken(response.data.token))
+        localStorage.setItem('access-token',response.data.token)
        }else{
         dispatch(setStatus(STATUS.ERROR))
        }

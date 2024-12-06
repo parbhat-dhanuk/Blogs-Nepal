@@ -18,8 +18,9 @@ const Login = () => {
 
     useEffect(()=>{
       if(status===STATUS.SUCCESS){
-        navigate("/")
         dispatch(setStatus(null))
+        navigate("/")
+        
       }
     },[status])
 
