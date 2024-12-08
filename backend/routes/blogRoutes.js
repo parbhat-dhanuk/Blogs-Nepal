@@ -6,8 +6,8 @@ import{uploadImage} from '../utils/cloudinary.js';
 const router=express.Router()
 
 router.post('/addBlog',uploadImage, isAuthenticated, addBlog)
-router.post('/getBlogs', getBlogs)
-router.post('/getBlog/:id', getBlog)
+router.get('/getBlogs', getBlogs)
+router.get('/getBlog/:id', getBlog)
 router.patch('/updateBlog/:id', uploadImage,isAuthenticated, updateBlog)
 router.delete('/deleteBlog/:id',isAuthenticated, deleteBlog)
 

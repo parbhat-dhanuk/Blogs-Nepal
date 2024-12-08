@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { setStatus } from '../redux/otpSlice';
 import API from '../http';
+import { setToken } from '../redux/authSlice';
 
 const Navbar = () => {
 
@@ -33,6 +34,7 @@ const Navbar = () => {
         setIsLoggedIn(false)
         navigate('/login')
         dispatch(setStatus(null))
+        dispatch(setToken(""))
         
       } catch (error) {
         console.error('Error logging out:', error);

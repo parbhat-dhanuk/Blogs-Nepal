@@ -12,7 +12,7 @@ const Createblog = () => {
   const navigate=useNavigate()
   const {status}=useSelector((state)=>state.blog)
 
-  const handleCreate=async(data)=>{
+  const handleCreate=(data)=>{
    dispatch(create(data))
   }
 

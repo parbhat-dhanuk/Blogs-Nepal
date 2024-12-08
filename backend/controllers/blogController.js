@@ -37,10 +37,10 @@ export const addBlog=async (req,res)=>{
 }
 
 
-export const getBlogs =async (_,res)=>{
+export const getBlogs =async (req,res)=>{
     try {
-        const products = await Blog.find();
-        res.status(200).json(products);
+        const products = await Blog.find()
+        res.status(200).json({data:products})
       } catch (error) {
         console.log("Error in getBlog controller",error.message)
         res.status(500).json({error:`Internal server error`})
@@ -54,7 +54,7 @@ export const getBlog =async (req,res)=>{
         if(!product){
             return res.status(400).json({message:"No product available"})
         }
-        res.status(200).json(product);
+        res.status(200).json({data:product});
       } catch (error) {
         console.log("Error in singleBlog controller",error.message)
         res.status(500).json({error:`Internal server error`})

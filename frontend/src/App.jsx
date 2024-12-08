@@ -27,7 +27,7 @@ const App = () => {
       <Route path='/terms' element={<Termsandconditions/>}/>
       <Route path='/blogs' element={<Blogs/>}/>
       <Route path='/blog/create' element={<Createblog/>}/>
-      <Route path='/blog/single' element={<Singleblog/>}/>
+      <Route path='/blog/single/:id' element={<Singleblog/>}/>
       <Route path='/blog/edit' element={<Editblog/>}/>
       <Route path="*" element={<Notfound/>} />
       
