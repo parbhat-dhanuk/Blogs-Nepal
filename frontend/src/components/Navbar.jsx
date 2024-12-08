@@ -80,7 +80,7 @@ const Navbar = () => {
                         </li>
 
                         <li>
-                            <Link to="/create" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Create</Link>
+                        <Link to="/blog/create" className="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create Blog</Link>
                         </li>
                            </>
                         ):(
@@ -88,9 +88,7 @@ const Navbar = () => {
                              <li>
                             <Link to="/" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Home</Link>
                         </li>
-                        <li>
-                            <Link to="/create" className="block py-2 pr-4 pl-3 text-white rounded bg-blue-700 lg:bg-transparent lg:text-blue-700 lg:p-0 dark:text-white" aria-current="page">Create</Link>
-                        </li>
+                        
                             </>
                         )
                      }

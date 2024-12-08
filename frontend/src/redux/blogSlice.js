@@ -29,3 +29,27 @@ const blogSlice = createSlice({
 export const {setUser,setStatus} = blogSlice.actions
 
 export default blogSlice.reducer
+
+
+//Create
+
+export function create(data){
+    return async function createThunk(dispatch){
+        dispatch(setStatus(STATUS.LOADING))
+      try {
+        const response = await API.post("/addBlog",data,{
+            headers:{
+                "Content-Type":"multipart/form-data"
+             },
+             withCredentials: true, 
+        })
+        if(response.status===201){
+         dispatch(setStatus(STATUS.SUCCESS))
+        }else{
+            dispatch(setStatus(STATUS.ERROR))
+        }
+      } catch (error) {
+        dispatch(setStatus(STATUS.ERROR))
+      }
+    }
+}
