@@ -19,7 +19,7 @@ const Login = () => {
     useEffect(()=>{
       if(status===STATUS.SUCCESS){
         dispatch(setStatus(null))
-        navigate("/")
+        navigate("/blogs")
         
       }
     },[status])
