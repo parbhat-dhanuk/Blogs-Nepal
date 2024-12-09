@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 
 const Blogform = ({type,submit,Edata}) => {
 
@@ -9,7 +10,7 @@ const [blog,setBlog]=useState({
   description:""
 })
 
-
+const {message}=useSelector((state)=>state.blog)
 useEffect(() => {
   if (type === "Edit" && Edata) {
     setBlog(Edata);
@@ -23,8 +24,6 @@ const handleChange=(e)=>{
     [name]:name=="image"?e.target.files[0]:value
   })
 }
-
-
 
 const handleSubmit=(e)=>{
   e.preventDefault()
@@ -42,8 +41,9 @@ const handleSubmit=(e)=>{
           <h1 className="font-bold uppercase text-5xl">
             {type} <br /> Blog
           </h1>
+          
         </div>
-
+        <p className='text-red-500 text-3xl mt-10'>{message}</p>
        {
         type==="Edit"?(<>
          <form onSubmit={handleSubmit}>

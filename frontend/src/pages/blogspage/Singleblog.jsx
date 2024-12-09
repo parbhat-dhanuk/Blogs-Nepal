@@ -16,7 +16,8 @@ const Singleblog = () => {
 
     const [blog,setBlog]=useState({})
     const {id} = useParams()
-    const {status,data} =useSelector((state)=>state.blog)
+    const {status,data,message} =useSelector((state)=>state.blog)
+    
     const dispatch=useDispatch()
     const navigate=useNavigate()
 
@@ -38,6 +39,9 @@ const Singleblog = () => {
      }
 
      
+     
+
+     
 
      useEffect(()=>{
         if(status===STATUS.DELETED){
@@ -48,8 +52,10 @@ const Singleblog = () => {
 
   return (
     <div className="bg-gray-100 dark:bg-gray-800 py-8 h-screen">
+       
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row -mx-4">
+        
             <div className="md:flex-1 px-4">
                 <div className="h-[460px] rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
                     <img className="w-full h-full object-cover" src={blog.imageUrl} alt="Blog Image" />
@@ -67,6 +73,11 @@ const Singleblog = () => {
                         <button onClick={handleDelete} className="w-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Delete</button>
                     </div>
 
+                    <div className="w-1/2 px-2">
+                        <button onClick={()=>navigate('/comment')}  className="w-full bg-blue-500 dark:bg-gray-700 text-gray-800 dark:text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">Comment</button>
+                    </div>
+                    
+
 
                 </div>
                     )
@@ -83,6 +94,8 @@ const Singleblog = () => {
                     <div>
                         <span className="font-bold text-gray-700 dark:text-gray-300">Published At: </span>
                         <span className="text-gray-600 dark:text-gray-300">{blog.createdAt}</span>
+
+                       
                     </div>
                 </div>
  
@@ -91,9 +104,15 @@ const Singleblog = () => {
                     <p className="text-gray-600 dark:text-gray-300 text-sm mt-2">
                         {blog.description}
                     </p>
+
+                  
                 </div>
+          
+                <p className='text-red-500 text-3xl mt-10'>{message}</p>
             </div>
+           
         </div>
+        
     </div>
 </div>
   )

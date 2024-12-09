@@ -7,7 +7,7 @@ const Protected = ({children}) => {
     const isAuthenticated=token||localStorage.getItem("access-token")
 
     if(!isAuthenticated){
-        return <Navigate to="/login"/>
+        return <Navigate to="/"/>
     }else{
         return(
            <>

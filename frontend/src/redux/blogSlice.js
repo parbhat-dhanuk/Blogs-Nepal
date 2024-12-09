@@ -9,7 +9,8 @@ const blogSlice = createSlice({
     initialState:{
 
         data:null,
-        status:null
+        status:null,
+        message:null
         
     },
 
@@ -21,12 +22,15 @@ const blogSlice = createSlice({
 
         setStatus(state,action){
             state.status=action.payload
+        },
+        setMessage(state,action){
+          state.message=action.payload
         }
         
     }
 })
 
-export const {setData,setStatus} = blogSlice.actions
+export const {setData,setStatus,setMessage} = blogSlice.actions
 
 export default blogSlice.reducer
 
@@ -99,11 +103,15 @@ export function fetchSingle ({id}){
 
 export function blogDelete({id}){
     return async function blogDeleteThunk(dispatch){
-        dispatch(setStatus(STATUS.LOADING))
+        try {
+          dispatch(setStatus(STATUS.LOADING))
         const response = await API.delete(`/deleteBlog/${id}`,{
           withCredentials: true, 
         })
         dispatch(setStatus(STATUS.DELETED))
+        } catch (error) {
+          dispatch(setMessage(error.response.data.message))
+        }
     }
 }
 
@@ -128,7 +136,7 @@ export function update({data,id}){
           dispatch(setStatus(STATUS.ERROR))
       }
     } catch (error) {
-      dispatch(setStatus(STATUS.ERROR))
+      dispatch(setMessage(error.response.data.message))
     }
   }
 }

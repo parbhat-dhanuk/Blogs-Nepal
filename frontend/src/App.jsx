@@ -13,6 +13,7 @@ import Singleblog from "./pages/blogspage/Singleblog"
 import Editblog from "./pages/blogspage/Editblog"
 import Notfound from "./pages/blogspage/Notfound"
 import Protected from "./pages/protectedpage/Protected"
+import Comment from "./components/Comment"
 const App = () => {
   return (
     <BrowserRouter>
@@ -24,6 +25,7 @@ const App = () => {
       <Route path='/verifyotp' element={<Verifyotp/>}/>
       <Route path='/changepassword' element={<Changepassword/>}/>
       <Route path='/privacy' element={<Privacypolocy/>}/>
+      <Route path='/comment' element={<Comment/>}/>
       <Route path='/terms' element={<Termsandconditions/>}/>
       <Route path='/blogs' element={<Blogs/>}/>
       <Route path='/blog/create' element={<Protected><Createblog/></Protected>}/>
