@@ -8,21 +8,27 @@ export const addBlog=async (req,res)=>{
     if(!title||!subtitle||!description){
         return res.status(400).json({message:"please provide all fields"})
     }
-    if (!file) {
-        return res.status(400).json({message:"Image is required"})
-    }
 
-     // Upload image to Cloudinary
+    let imageUrl="https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE="
+    let imagePublicId = null;
+    if (file) {
+             // Upload image to Cloudinary
      const uploadResult = await cloudinary.uploader.upload(file.path,{
-        folder:'blog-nepal'
-      });
-
+      folder:'blog-nepal',
+      transformation: [
+        { width: 300, height: 300, crop: "fill"}, // Example crop
+      ],
+    });
+    imageUrl = uploadResult.secure_url;
+    imagePublicId = uploadResult.public_id;
+    }
+    
     await Blog.create({
         title,
         subtitle,
         description,
-        imageUrl: uploadResult.secure_url,
-        imagePublicId: uploadResult.public_id // Save public_id here
+        imageUrl,
+        imagePublicId
 
     })
 

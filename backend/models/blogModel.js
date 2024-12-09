@@ -20,8 +20,7 @@ const blogSchema=new mongoose.Schema({
        required:true
     },
     imagePublicId: {
-        type : String,
-        required: true 
+        type : String
     }
 
   
