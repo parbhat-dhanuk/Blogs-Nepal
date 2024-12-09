@@ -10,9 +10,9 @@ import Termsandconditions from "./pages/privacy policy/Termsandconditions"
 import Blogs from "./pages/blogspage/Blogs"
 import Createblog from "./pages/blogspage/Createblog"
 import Singleblog from "./pages/blogspage/Singleblog"
-import Blogform from "./pages/blogspage/Blogform"
 import Editblog from "./pages/blogspage/Editblog"
 import Notfound from "./pages/blogspage/Notfound"
+import Protected from "./pages/protectedpage/Protected"
 const App = () => {
   return (
     <BrowserRouter>
@@ -26,9 +26,9 @@ const App = () => {
       <Route path='/privacy' element={<Privacypolocy/>}/>
       <Route path='/terms' element={<Termsandconditions/>}/>
       <Route path='/blogs' element={<Blogs/>}/>
-      <Route path='/blog/create' element={<Createblog/>}/>
+      <Route path='/blog/create' element={<Protected><Createblog/></Protected>}/>
       <Route path='/blog/single/:id' element={<Singleblog/>}/>
-      <Route path='/blog/edit/:id' element={<Editblog/>}/>
+      <Route path='/blog/edit/:id' element={<Protected><Editblog/></Protected>}/>
       <Route path="*" element={<Notfound/>} />
       
     </Routes>

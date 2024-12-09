@@ -10,7 +10,8 @@ const authSlice = createSlice({
 
         user:"",
         token:null,
-        status:null
+        status:null,
+        message:null
         
     },
 
@@ -18,6 +19,7 @@ const authSlice = createSlice({
 
         setUser(state,action){
             state.user=action.payload
+            state.message = null; 
         },
 
         setToken(state,action){
@@ -25,12 +27,15 @@ const authSlice = createSlice({
         },
         setStatus(state,action){
             state.status=action.payload
+        },
+        setMessage(state,action){
+            state.message=action.payload
         }
         
     }
 })
 
-export const {setUser,setToken,setStatus,setloggedIn} = authSlice.actions
+export const {setUser,setToken,setStatus,setMessage} = authSlice.actions
 
 export default authSlice.reducer
 
@@ -59,14 +64,17 @@ export function register(data){
 
 export function login(data){
     return async function loginThunk(dispatch){
-        dispatch(setStatus(STATUS.LOADING))
+        try {
+            dispatch(setStatus(STATUS.LOADING))
         const response = await API.post("/login",data,{ withCredentials: true })
        if(response.status===200){
         dispatch(setStatus(STATUS.SUCCESS))
         dispatch(setToken(response.data.token))
         localStorage.setItem('access-token',response.data.token)
-       }else{
-        dispatch(setStatus(STATUS.ERROR))
        }
+        } catch (error) {
+            dispatch(setMessage(error.response.data.message))
+        }
+      
     }
 }

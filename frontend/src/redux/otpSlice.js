@@ -7,7 +7,6 @@ const otpSlice=createSlice({
     name:"otp",
     initialState:{
         user:"",
-        token:null,
         status:null
     },
     reducers:{

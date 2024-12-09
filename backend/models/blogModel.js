@@ -21,7 +21,11 @@ const blogSchema=new mongoose.Schema({
     },
     imagePublicId: {
         type : String
-    }
+    },
+    authorId: { 
+        type: mongoose.Schema.Types.ObjectId, ref: 'User',
+         required: true
+         }
 
   
 },

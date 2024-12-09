@@ -4,6 +4,7 @@ import { cloudinary } from '../utils/cloudinary.js';
 export const addBlog=async (req,res)=>{
     try {
         const {title,subtitle,description,}=req.body
+        const authorId=req.user.id
          const file=req.file
     if(!title||!subtitle||!description){
         return res.status(400).json({message:"please provide all fields"})
@@ -28,7 +29,8 @@ export const addBlog=async (req,res)=>{
         subtitle,
         description,
         imageUrl,
-        imagePublicId
+        imagePublicId,
+        authorId
 
     })
 
@@ -90,8 +92,11 @@ export const updateBlog=async (req,res)=>{
   
         // Upload new image to Cloudinary
         const uploadResult = await cloudinary.uploader.upload(file.path, {
-          folder: 'blog-nepal'
-        });
+          folder: 'blog-nepal',
+          transformation: [
+            { width: 300, height: 300, crop: "fill"}, // Example crop
+          ]
+        })
   
         imageUrl = uploadResult.secure_url;
         imagePublicId = uploadResult.public_id;

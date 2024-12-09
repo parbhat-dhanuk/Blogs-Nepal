@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import { useSelector } from 'react-redux'
 const Authform = ({type,submit}) => {
 const [data,setData]=useState({
   email:"",
@@ -16,6 +16,7 @@ const [visibleconfirmPassword,setVisibleconfirmPassword]=useState(false)
 
 const[passwordError,setPasswordError]=useState()
 
+const{message} = useSelector((state)=>state.auth)
 
 const [email, setEmail] = useState('');
  
@@ -55,6 +56,8 @@ const handleSubmit = (e)=>{
   return (
     <>
     <div className="font-[sans-serif] bg-white max-w-4xl flex items-center mx-auto md:h-screen p-4">
+    
+
       <div className="grid md:grid-cols-3 items-center shadow-[0_2px_10px_-3px_rgba(6,81,237,0.3)] rounded-xl overflow-hidden">
         <div className="max-md:order-1 flex flex-col justify-center space-y-16 max-md:mt-16 min-h-full bg-gradient-to-r from-gray-900 to-gray-700 lg:px-8 px-4 py-4">
           <div>
@@ -69,6 +72,9 @@ const handleSubmit = (e)=>{
 
         <form onSubmit={handleSubmit} className="md:col-span-2 w-full py-6 px-6 sm:px-16">
           <div className="mb-6">
+
+            {/* email validation */}
+    <p className='text-red-500 text-2xl mx-20'>{message}</p>
             <h3 className="text-gray-800 text-2xl font-bold">{type==="Register"?"Create an accoun":"Login an accoun"}t</h3>
           </div>
 
@@ -156,6 +162,7 @@ const handleSubmit = (e)=>{
             </div>
             </>):(<>
               <div>
+              
               <label className="text-gray-800 text-sm mb-2 block">Email Id</label>
               <div className="relative flex items-center">
                 <input onChange={handleChange} name="email" type="email" required className="text-gray-800 bg-white border border-gray-300 w-full text-sm px-4 py-2.5 rounded-md outline-blue-500" placeholder="Enter email" />
@@ -171,6 +178,7 @@ const handleSubmit = (e)=>{
                   </g>
                 </svg>
               </div>
+              
             </div>
 
 
@@ -190,6 +198,7 @@ const handleSubmit = (e)=>{
                  }
                 </svg>
               </div>
+
             </div>
             </>)}
 
@@ -202,11 +211,12 @@ const handleSubmit = (e)=>{
             </div>
             )}
           </div>
-
+          
           <div className="!mt-8">
             <button  type="submit" className="w-full py-3 px-4 tracking-wider text-sm rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none">
               {type==="Register"?"Create an account":"Login account"}
             </button>
+            
           </div>
           <p className="text-gray-800 text-sm mt-6 text-center">{type==="Register"?<p>Already have an account?</p>:<p>Don't have an account?</p>}{type==="Register"? (<Link to="/login" className="text-blue-600 font-semibold hover:underline ml-1">Login here</Link>):( <Link to="/register" className="text-blue-600 font-semibold hover:underline ml-1">Register here</Link>)}</p>
         
