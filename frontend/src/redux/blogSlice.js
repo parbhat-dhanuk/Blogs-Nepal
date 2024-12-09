@@ -106,3 +106,29 @@ export function blogDelete({id}){
         dispatch(setStatus(STATUS.DELETED))
     }
 }
+
+
+
+//Update
+
+export function update({data,id}){
+  return async function updateThunk(dispatch){
+      dispatch(setStatus(STATUS.LOADING))
+      console.log(data)
+    try {
+      const response = await API.patch(`/updateBlog/${id}`,data,{
+          headers:{
+              "Content-Type":"multipart/form-data"
+           },
+           withCredentials: true, 
+      })
+      if(response.status===200){
+       dispatch(setStatus(STATUS.SUCCESS))
+      }else{
+          dispatch(setStatus(STATUS.ERROR))
+      }
+    } catch (error) {
+      dispatch(setStatus(STATUS.ERROR))
+    }
+  }
+}

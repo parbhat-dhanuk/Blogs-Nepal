@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const Blogform = ({type,submit}) => {
+const Blogform = ({type,submit,Edata}) => {
 
 const [blog,setBlog]=useState({
   title:"",
@@ -8,6 +8,13 @@ const [blog,setBlog]=useState({
   image:"",
   description:""
 })
+
+
+useEffect(() => {
+  if (type === "Edit" && Edata) {
+    setBlog(Edata);
+  }
+}, [type, Edata]);
 
 const handleChange=(e)=>{
   const {name,value}=e.target
@@ -18,11 +25,14 @@ const handleChange=(e)=>{
 }
 
 
+
 const handleSubmit=(e)=>{
   e.preventDefault()
   submit(blog)
  
 }
+
+
 
   return (
     <div className="flex justify-center  w-screen h-screen">
@@ -34,7 +44,55 @@ const handleSubmit=(e)=>{
           </h1>
         </div>
 
-        <form onSubmit={handleSubmit}>
+       {
+        type==="Edit"?(<>
+         <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
+            <input 
+            onChange={handleChange}
+              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+              type="text"
+              name="title"
+              value={blog?.title}
+              required
+            />
+            <input
+             onChange={handleChange}
+              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+              type="text"
+              name="subtitle"
+              value={blog?.subtitle}
+              required
+            />
+            <input
+             onChange={handleChange}
+              className="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+              type="file"
+              name="image"
+              value={blog?.imageUrl}
+            />
+           
+          </div>
+          <div className="my-4">
+            <textarea
+             value={blog?.description}
+             onChange={handleChange}
+              name="description"
+              className="w-full h-32 bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+            ></textarea>
+          </div>
+          <div className="my-2 w-1/2 lg:w-1/4">
+            <button type="submit"
+              className="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full 
+                    focus:outline-none focus:shadow-outline"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+        
+        </>):(<>
+          <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 mt-5">
             <input 
             onChange={handleChange}
@@ -77,6 +135,8 @@ const handleSubmit=(e)=>{
             </button>
           </div>
         </form>
+        </>)
+       }
       </div>
     </div>
   </div>

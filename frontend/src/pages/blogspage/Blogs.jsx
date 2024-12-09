@@ -21,6 +21,7 @@ const Blogs = () => {
 useEffect(()=>{
 if(status===STATUS.SUCCESS){
  setBlogs(data)
+ dispatch(setStatus(null))
  
     }
 },[status])
