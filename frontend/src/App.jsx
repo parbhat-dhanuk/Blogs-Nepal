@@ -25,7 +25,7 @@ const App = () => {
       <Route path='/verifyotp' element={<Verifyotp/>}/>
       <Route path='/changepassword' element={<Changepassword/>}/>
       <Route path='/privacy' element={<Privacypolocy/>}/>
-      <Route path='/comment' element={<Comment/>}/>
+      <Route path='/comment/:id' element={<Comment/>}/>
       <Route path='/terms' element={<Termsandconditions/>}/>
       <Route path='/blogs' element={<Blogs/>}/>
       <Route path='/blog/create' element={<Protected><Createblog/></Protected>}/>

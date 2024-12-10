@@ -1,6 +1,53 @@
-import React from 'react'
+import { useState , useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { createComment } from '../redux/commentSlice'
+import { fetchSingle } from '../redux/blogSlice'
 
 const Comment = () => {
+
+const [comment,setComment]=useState({
+    content:""
+})
+
+
+
+const {comments} = useSelector((state) => state.comment)
+const [saveComment,setSaveComment]=useState('')
+const {data} = useSelector((state) => state.blog)
+  const dispatch=useDispatch()
+  const {id}=useParams()
+ 
+const userId=data?.authorId
+
+
+ 
+
+const handleChange=(e)=>{
+    setComment({
+       ...comment,
+       [e.target.name]:e.target.value
+    })
+ }
+ 
+    
+
+useEffect(()=>{
+    dispatch(fetchSingle({ id }))
+    console.log(saveComment)
+    
+},[])
+
+
+const handleSubmit=(e)=>{
+    e.preventDefault()
+    setSaveComment(comment)
+    dispatch(createComment(comment,id,userId))
+    
+}
+
+
+
   return (
    
     <>
@@ -9,10 +56,13 @@ const Comment = () => {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">Discussion (20)</h2>
     </div>
-    <form className="mb-6">
+    <form onSubmit={handleSubmit} className="mb-6">
         <div className="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <label htmlFor="comment" className="sr-only">Your comment</label>
-            <textarea id="comment" rows="6"
+
+            {/* comment section */}
+
+            <textarea onChange={handleChange} name="content" id="comment" rows="6"
                 className="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
                 placeholder="Write a comment..." required></textarea>
         </div>
@@ -27,9 +77,10 @@ const Comment = () => {
                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
                         className="mr-2 w-6 h-6 rounded-full"
                         src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                        alt="Michael Gough" />Michael Gough</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400"><time pubdate dateTime="2022-02-08"
-                        title="February 8th, 2022">Feb. 8, 2022</time></p>
+                        alt="Michael Gough" />{comments?.userId}</p>  
+                        {/* comment userId */}
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                        </p>
             </div>
             <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
                 className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-400 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -59,9 +110,10 @@ const Comment = () => {
                 </ul>
             </div>
         </footer>
-        <p className="text-gray-500 dark:text-gray-400">Very straight-to-point article. Really worth time reading. Thank you! But tools are just the
-            instruments for the UX designers. The knowledge of the design tools are as important as the
-            creation of the design strategy.</p>
+        <p className="text-gray-500 dark:text-gray-400"> 
+           
+           {comments?.content}
+            </p>
         <div className="flex items-center mt-4 space-x-4">
             <button type="button"
                 className="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium">
